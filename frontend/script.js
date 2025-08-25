@@ -5,7 +5,7 @@ const API_URL = '/api';
 let currentSessionId = null;
 
 // DOM elements
-let chatMessages, chatInput, sendButton, totalCourses, courseTitles;
+let chatMessages, chatInput, sendButton, totalCourses, courseTitles, newChatButton;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sendButton = document.getElementById('sendButton');
     totalCourses = document.getElementById('totalCourses');
     courseTitles = document.getElementById('courseTitles');
+    newChatButton = document.getElementById('newChatButton');
     
     setupEventListeners();
     createNewSession();
@@ -28,6 +29,9 @@ function setupEventListeners() {
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendMessage();
     });
+    
+    // New chat button
+    newChatButton.addEventListener('click', startNewChat);
     
     
     // Suggested questions
@@ -171,6 +175,50 @@ async function createNewSession() {
     currentSessionId = null;
     chatMessages.innerHTML = '';
     addMessage('Welcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?', 'assistant', null, true);
+}
+
+async function startNewChat() {
+    // Disable button during process
+    newChatButton.disabled = true;
+    newChatButton.innerHTML = `
+        <span class="new-chat-icon">⟳</span>
+        <span class="new-chat-text">STARTING...</span>
+    `;
+
+    try {
+        // Create new session on backend
+        const response = await fetch(`${API_URL}/new-session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) throw new Error('Failed to create new session');
+
+        const data = await response.json();
+        
+        // Update session ID and clear frontend
+        currentSessionId = data.session_id;
+        chatMessages.innerHTML = '';
+        addMessage('Welcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?', 'assistant', null, true);
+        
+        // Clear input field
+        chatInput.value = '';
+        chatInput.focus();
+
+    } catch (error) {
+        console.error('Error starting new chat:', error);
+        // Fallback to frontend-only session creation
+        createNewSession();
+    } finally {
+        // Re-enable button
+        newChatButton.disabled = false;
+        newChatButton.innerHTML = `
+            <span class="new-chat-icon">+</span>
+            <span class="new-chat-text">NEW CHAT</span>
+        `;
+    }
 }
 
 // Load course statistics

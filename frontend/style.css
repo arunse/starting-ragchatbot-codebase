@@ -5,22 +5,22 @@
     padding: 0;
 }
 
-/* CSS Variables */
+/* CSS Variables - Light Mode */
 :root {
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
-    --background: #0f172a;
-    --surface: #1e293b;
-    --surface-hover: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border-color: #334155;
+    --background: #ffffff;
+    --surface: #f8fafc;
+    --surface-hover: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
     --user-message: #2563eb;
-    --assistant-message: #374151;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --assistant-message: #f1f5f9;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --radius: 12px;
     --focus-ring: rgba(37, 99, 235, 0.2);
-    --welcome-bg: #1e3a5f;
+    --welcome-bg: #eff6ff;
     --welcome-border: #2563eb;
 }
 
@@ -91,7 +91,7 @@ header h1 {
 }
 
 .sidebar::-webkit-scrollbar-track {
-    background: var(--surface);
+    background: var(--background);
 }
 
 .sidebar::-webkit-scrollbar-thumb {
@@ -150,7 +150,7 @@ header h1 {
 }
 
 .chat-messages::-webkit-scrollbar-track {
-    background: var(--surface);
+    background: var(--background);
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
@@ -247,12 +247,12 @@ header h1 {
 
 /* Source links styling */
 .sources-content a {
-    color: #60a5fa;
+    color: #1e40af;
     text-decoration: none;
-    background: rgba(96, 165, 250, 0.1);
+    background: rgba(37, 99, 235, 0.08);
     padding: 0.25rem 0.5rem;
     border-radius: 6px;
-    border: 1px solid rgba(96, 165, 250, 0.2);
+    border: 1px solid rgba(37, 99, 235, 0.2);
     margin: 0 0.25rem 0.25rem 0;
     display: inline-block;
     font-weight: 500;
@@ -261,15 +261,15 @@ header h1 {
 }
 
 .sources-content a:hover {
-    color: #93c5fd;
-    background: rgba(96, 165, 250, 0.2);
-    border-color: rgba(147, 197, 253, 0.4);
+    color: #1e40af;
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.3);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
 }
 
 .sources-content a:focus {
-    outline: 2px solid #60a5fa;
+    outline: 2px solid #2563eb;
     outline-offset: 2px;
     border-radius: 6px;
 }
@@ -313,24 +313,29 @@ header h1 {
 }
 
 .message-content code {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: #f1f5f9;
+    color: #e11d48;
     padding: 0.125rem 0.25rem;
     border-radius: 3px;
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.875em;
+    border: 1px solid #e2e8f0;
 }
 
 .message-content pre {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: #f8fafc;
     padding: 0.75rem;
     border-radius: 4px;
     overflow-x: auto;
     margin: 0.5rem 0;
+    border: 1px solid #e2e8f0;
 }
 
 .message-content pre code {
     background-color: transparent;
     padding: 0;
+    border: none;
+    color: var(--text-primary);
 }
 
 .message-content blockquote {
@@ -479,6 +484,49 @@ header h1 {
     border-radius: 8px;
     border: 1px solid rgba(34, 197, 94, 0.2);
     margin: 0.5rem 0;
+}
+
+/* New Chat Button - Styled like sidebar headers */
+.new-chat-button {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    border: none;
+    background: none;
+    list-style: none;
+    outline: none;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+    width: 100%;
+}
+
+.new-chat-button:focus {
+    color: var(--primary-color);
+}
+
+.new-chat-button:hover {
+    color: var(--primary-color);
+}
+
+.new-chat-button::before {
+    content: '+';
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+    font-size: 0.75rem;
+}
+
+.new-chat-icon {
+    display: none;
+}
+
+.new-chat-text {
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 /* Sidebar Headers */
@@ -690,7 +738,7 @@ details[open] .suggested-header::before {
     }
     
     .sidebar::-webkit-scrollbar-track {
-        background: var(--surface);
+        background: var(--background);
     }
     
     .sidebar::-webkit-scrollbar-thumb {
