@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Running the Application
 ```bash
-# Quick start (recommended)
-./run.sh
-
-# Manual start
+# Start the server
 cd backend && uv run uvicorn app:app --reload --port 8000
+
+# Alternative: Use the shell script
+./run.sh
 ```
 
 ### Package Management
@@ -122,6 +122,8 @@ The `CourseSearchTool` in `search_tools.py` provides Claude with:
 - Course name resolution (fuzzy matching)
 - Filtering by course title or lesson number
 - Returns structured results with metadata
-- always use use uv to run the server. do not use pip directly
-- make sure you use uv to manage all dependencies
-- use uv to run python files
+
+## Important Notes
+- Always use `uv` to run the server and manage dependencies (never use pip directly)
+- Use `uv run python <file>` to run Python files
+- No testing framework is configured in this project
