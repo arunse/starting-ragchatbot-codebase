@@ -69,13 +69,25 @@ async def query_documents(request: QueryRequest):
         # Process query using RAG system
         answer, sources = rag_system.query(request.query, session_id)
         
+        # Handle edge cases for better error handling
+        if answer is None:
+            answer = "I apologize, but I encountered an issue processing your query. Please try again."
+        elif answer == "":
+            answer = "I couldn't find relevant information for your query. Please try rephrasing your question."
+        
+        # Ensure sources is always a list
+        if sources is None:
+            sources = []
+        
         return QueryResponse(
             answer=answer,
             sources=sources,
             session_id=session_id
         )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # Log the error for debugging
+        print(f"Query processing error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Query processing failed: {str(e)}")
 
 @app.get("/api/courses", response_model=CourseStats)
 async def get_course_stats():
